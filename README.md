@@ -87,6 +87,7 @@ The final score is mapped to feedback categories to guide improvement.
 ├── Keyword Matching
 
 └── Length Evaluation
+
 6.Hybrid Score Calculation
 7.Feedback Generation
 8.Response Sent to Frontend
