@@ -76,22 +76,21 @@ The final score is mapped to feedback categories to guide improvement.
 
 ## Workflow
 
-1.User Login / Select Interview Mode
-2.Question Display (Frontend - React)
-3.User Submits Answer
-4.API Request to Backend (Flask)
-5.Answer Processing
+1. User Login / Select Interview Mode
+2. Question Display (Frontend - React)
+3. User Submits Answer
+4. API Request to Backend (Flask)
+5. Answer Processing
 
 ├── Semantic Similarity (Sentence Transformers)
 
 ├── Keyword Matching
 
 └── Length Evaluation
-
-6.Hybrid Score Calculation
-7.Feedback Generation
-8.Response Sent to Frontend
-9.Score & Feedback Displayed to User
+6. Hybrid Score Calculation
+7. Feedback Generation
+8. Response Sent to Frontend
+9. Score & Feedback Displayed to User
 
 ## Project Structure
 
