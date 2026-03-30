@@ -82,15 +82,16 @@ The final score is mapped to feedback categories to guide improvement.
 4. API Request to Backend (Flask)
 5. Answer Processing
 
-├── Semantic Similarity (Sentence Transformers)
+   ├── Semantic Similarity (Sentence Transformers)
 
-├── Keyword Matching
+   ├── Keyword Matching
 
-└── Length Evaluation
-6. Hybrid Score Calculation
-7. Feedback Generation
-8. Response Sent to Frontend
-9. Score & Feedback Displayed to User
+   └── Length Evaluation
+   
+7. Hybrid Score Calculation
+8. Feedback Generation
+9. Response Sent to Frontend
+10. Score & Feedback Displayed to User
 
 ## Project Structure
 
