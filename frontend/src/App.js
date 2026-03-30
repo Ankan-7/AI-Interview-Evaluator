@@ -336,8 +336,11 @@ function App() {
           >
             <h2>Interview</h2>
             <p>
-              Answered {Object.keys(answers).length} /{" "}
-              {interview.questions.length} questions
+              Answered {
+              Object.values(answers).filter(
+                (ans) => ans && ans.trim() !== ""
+              ).length
+              } / {interview.questions.length}
             </p>
             <span
               style={{

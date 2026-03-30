@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import json
 import re
 import random
+from ai_evaluator import hybrid_evaluate
 
 # -------------------- BASIC APP SETUP -------------------- #
 
@@ -296,7 +297,11 @@ def submit_interview():
                 continue
 
             key_terms = json.loads(q.key_terms or "[]")
-            eval_result = evaluate_answer(ans_text, key_terms)
+            eval_result = hybrid_evaluate(
+                q.reference_answer,
+                ans_text,
+                key_terms
+            )
             score = eval_result["score"]
             feedback = eval_result["feedback"]
 
