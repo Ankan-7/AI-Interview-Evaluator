@@ -1,151 +1,157 @@
 # AI Interview Evaluator
 
-AI Interview Evaluator is a full-stack web application that allows students to practice HR and Technical interview questions while receiving AI-based evaluation of their answers.
+A full-stack web application that simulates interview environments and evaluates candidate responses using natural language processing techniques.
 
-The system evaluates responses using semantic similarity (Sentence Transformers), keyword matching, and a hybrid scoring model.
+## Overview
 
----
+This project is designed to help students practice interview questions and receive structured feedback on their answers. It combines a web-based interface with an AI-driven evaluation system to simulate both HR and technical interview scenarios.
 
-## Features
+The system focuses on analyzing textual responses and providing meaningful feedback based on semantic understanding and key concept coverage.
 
-- Student login and registration
-- Admin panel for managing interview questions
-- HR interview mode
-- Technical interview mode
-- AI answer evaluation using semantic similarity
-- Keyword based scoring
-- Hybrid scoring system
-- Interview timer with auto-submit
-- Automatic feedback generation
-- SQLite database storage
+## Key Features
 
----
+* User authentication (student login & registration)
+* Admin panel for managing interview questions
+* HR and Technical interview modes
+* Real-time answer evaluation
+* Hybrid scoring system (semantic + keyword-based)
+* Interview timer with auto-submit
+* Automatic feedback generation
+* SQLite-based data storage
 
 ## Tech Stack
 
-Frontend:
-- React
-- Axios
+**Frontend**
 
-Backend:
-- Flask
-- SQLAlchemy
-- Flask-CORS
+* React
+* Axios
 
-AI / NLP:
-- Sentence Transformers
-- Semantic similarity using `all-MiniLM-L6-v2`
+**Backend**
 
-Database:
-- SQLite
+* Flask
+* SQLAlchemy
+* Flask-CORS
 
----
+**AI / NLP**
+
+* Sentence Transformers
+* Pretrained model: `all-MiniLM-L6-v2`
+
+**Database**
+
+* SQLite
+
+## System Architecture
+
+The application follows a client-server architecture:
+
+* React frontend handles user interaction
+* Flask backend manages APIs and evaluation logic
+* NLP module processes and evaluates responses
+* SQLite database stores users, questions, and results
+
+## How the Evaluation Works
+
+The system uses a hybrid approach to evaluate answers:
+
+1. **Semantic Similarity**
+
+   * Compares user response with a reference answer using Sentence Transformers
+
+2. **Keyword Matching**
+
+   * Ensures key concepts are present in the answer
+
+3. **Length Consideration**
+
+   * Encourages sufficiently detailed responses
+
+**Final Score Calculation:**
+
+```id="scorecalc"
+Score = 0.8 × Semantic Score + 0.2 × Keyword Score + Length Bonus
+```
+
+The final score is mapped to feedback categories to guide improvement.
+
+## Workflow
+
+1.User Login / Select Interview Mode
+2.Question Display (Frontend - React)
+3.User Submits Answer
+4.API Request to Backend (Flask)
+5.Answer Processing
+
+├── Semantic Similarity (Sentence Transformers)
+
+├── Keyword Matching
+
+└── Length Evaluation
+6.Hybrid Score Calculation
+7.Feedback Generation
+8.Response Sent to Frontend
+9.Score & Feedback Displayed to User
 
 ## Project Structure
+
+```id="projstruct"
 AI-Interview-Evaluator
 │
 ├── backend
-│ ├── app.py
-│ ├── ai_evaluator.py
-│ ├── requirements.txt
-│ └── ai_interview.db
+│   ├── app.py
+│   ├── ai_evaluator.py
+│   └── requirements.txt 
 │
 ├── frontend
-│ ├── src
-│ ├── public
-│ └── package.json
+│   ├── src
+│   ├── public
+│   └── package.json
 │
 └── README.md
+```
 
----
+## Setup Instructions
 
-## How the AI Evaluation Works
+### Backend
 
-The system evaluates answers using a hybrid scoring approach:
-
-1. **Semantic Similarity**
-   - Uses Sentence Transformers to compare the student answer with the reference answer.
-
-2. **Keyword Matching**
-   - Checks if important key concepts are included.
-
-3. **Length Bonus**
-   - Encourages more detailed answers.
-
-Final Score:
-Final Score = 0.8 × Semantic Score + 0.2 × Keyword Score + Length Bonus
-
-The score is then mapped to feedback categories.
-
----
-
-## Installation
-
-### 1. Clone the Repository
-git clone https://github.com/yourusername/AI-Interview-Evaluator.git
-
-### 2. Backend Setup
-
-Navigate to backend folder:
+```id="backendsetup"
 cd backend
-
-Create virtual environment:
 python -m venv venv
-
-Activate environment:
-
-Windows:
 venv\Scripts\activate
-
-Install dependencies:
 pip install -r requirements.txt
-
-Run backend:
 python app.py
+```
 
----
+### Frontend
 
-### 3. Frontend Setup
-
-Navigate to frontend folder:
+```id="frontendsetup"
 cd frontend
-
-Install dependencies:
 npm install
-
-Start React app:
 npm start
+```
 
----
+## Note
 
-## First Run Note
+On first run, the Sentence Transformer model (`all-MiniLM-L6-v2`) will be downloaded (~90MB).
 
-The first run will download the Sentence Transformer model:
-all-MiniLM-L6-v2 (~90MB)
+## Limitations & Future Work
 
-This may take a few seconds.
+* Evaluation is based on similarity, not full contextual understanding
+* Limited dataset of questions
+* Future improvements:
 
----
+  * Interview performance tracking
+  * Analytics dashboard
+  * More advanced NLP models
+  * Personalized feedback generation
 
-## Future Improvements
+## Demo
 
-- Interview history and progress tracking
-- Performance analytics dashboard
-- More advanced NLP evaluation
-- UI improvements
-- AI generated personalized feedback
-
----
+(Coming Soon...)
 
 ## Contributors
 
-- Ankan Kundu
-- Kaushik Shikari
-- Soumyadeep Mridha
-- Nafizal Arafat Prince
-
----
-
-## License
-
-This project is developed for academic and learning purposes.
+* Ankan Kundu
+* Kaushik Shikari
+* Soumyadeep Mridha
+* Nafizal Arafat Prince
