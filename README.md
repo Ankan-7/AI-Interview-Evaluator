@@ -148,7 +148,42 @@ On first run, the Sentence Transformer model (`all-MiniLM-L6-v2`) will be downlo
 
 ## Demo
 
-(Coming Soon...)
+## Demo
+
+### Application Screenshots
+
+#### Login Interface
+Users can log in as either a **Student** or an **Admin** based on their role.
+
+<img src="assets/login.png" width="700"/>
+
+---
+
+#### Student Dashboard
+Students can access interview modes and start answering questions in a structured environment.
+
+<img src="assets/student_interface.png" width="700"/>
+
+---
+
+#### Admin Panel
+Admins can manage and update interview questions for both HR and technical rounds.
+
+<img src="assets/admin_interface.png" width="700"/>
+
+---
+
+#### Answer Submission
+Users can write and submit their responses within the given time during the interview session.
+
+<img src="assets/answer_submission.png" width="700"/>
+
+---
+
+#### Evaluation & Feedback
+The system evaluates responses using a hybrid AI approach and provides scores along with feedback.
+
+<img src="assets/evaluation.png" width="700"/>
 
 ## Contributors
 
