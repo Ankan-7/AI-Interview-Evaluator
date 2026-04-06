@@ -17,6 +17,7 @@ load_dotenv()
 # -------------------- BASIC APP SETUP -------------------- #
 
 app = Flask(__name__)
+app.config["JSON_SORT_KEYS"] = False
 CORS(app)
 
 # SQLite database file in backend folder
