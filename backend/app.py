@@ -1,4 +1,3 @@
-print("APP FILE LOADED")
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
@@ -21,9 +20,7 @@ load_dotenv()
 # -------------------- BASIC APP SETUP -------------------- #
 
 app = Flask(__name__)
-print("FLASK APP CREATED")
 app.config["JSON_SORT_KEYS"] = False
-print("Flask app started successfully")
 @app.route("/ping")
 def ping():
     return "pong"
@@ -31,8 +28,15 @@ CORS(app)
 
 # SQLite database file in backend folder
 DATABASE_URL = os.getenv("DATABASE_URL")
-engine = create_engine(DATABASE_URL, echo=False)
-SessionLocal = sessionmaker(bind=engine)
+engine = None
+SessionLocal = None
+
+def get_db():
+    global engine, SessionLocal
+    if engine is None:
+        engine = create_engine(DATABASE_URL, echo=False)
+        SessionLocal = sessionmaker(bind=engine)
+    return SessionLocal()
 Base = declarative_base()
 
 # -------------------- DATABASE MODELS -------------------- #
@@ -77,7 +81,7 @@ class Response(Base):
     interview = relationship("Interview", back_populates="responses")
 
 # Create tables if not exist
-#Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 
 # -------------------- EVALUATION LOGIC -------------------- #
 
@@ -156,7 +160,7 @@ def register():
     if not all([name, email, password]):
         return jsonify({"error": "Name, email, and password are required"}), 400
 
-    db = SessionLocal()
+    db = get_db()
     try:
         existing = db.query(User).filter_by(email=email).first()
         if existing:
@@ -182,7 +186,7 @@ def login():
     email = data.get("email")
     password = data.get("password")
 
-    db = SessionLocal()
+    db = get_db()
     try:
         user = db.query(User).filter_by(email=email).first()
         if not user:
