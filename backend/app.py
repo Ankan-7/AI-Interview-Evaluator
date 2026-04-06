@@ -1,3 +1,4 @@
+print("APP FILE LOADED")
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
@@ -11,13 +12,21 @@ import random
 from ai_evaluator import hybrid_evaluate
 import os
 from dotenv import load_dotenv
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 load_dotenv()
 
 # -------------------- BASIC APP SETUP -------------------- #
 
 app = Flask(__name__)
+print("FLASK APP CREATED")
 app.config["JSON_SORT_KEYS"] = False
+print("Flask app started successfully")
+@app.route("/ping")
+def ping():
+    return "pong"
 CORS(app)
 
 # SQLite database file in backend folder
@@ -68,7 +77,7 @@ class Response(Base):
     interview = relationship("Interview", back_populates="responses")
 
 # Create tables if not exist
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine)
 
 # -------------------- EVALUATION LOGIC -------------------- #
 
