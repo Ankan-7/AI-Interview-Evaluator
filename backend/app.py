@@ -9,6 +9,10 @@ import json
 import re
 import random
 from ai_evaluator import hybrid_evaluate
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # -------------------- BASIC APP SETUP -------------------- #
 
@@ -16,7 +20,8 @@ app = Flask(__name__)
 CORS(app)
 
 # SQLite database file in backend folder
-engine = create_engine('sqlite:///ai_interview.db', echo=False)
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL, echo=False)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 

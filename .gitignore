@@ -8,11 +8,11 @@ __pycache__/
 # Database
 *.db
 
+# Environment variables
+.env
+
 # Node
 node_modules/
-
-# Environment
-.env
 
 # VS Code
 .vscode/
@@ -20,5 +20,3 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
-
-ai_interview.db
