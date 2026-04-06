@@ -39,7 +39,7 @@ The system focuses on analyzing textual responses and providing meaningful feedb
 
 **Database**
 
-* SQLite
+* PostgreSQL (Supabase)
 
 ## System Architecture
 
