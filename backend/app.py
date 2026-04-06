@@ -1,3 +1,4 @@
+print("STARTING FLASK APP...")
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
@@ -21,9 +22,9 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
-@app.route("/ping")
-def ping():
-    return "pong"
+@app.route("/")
+def home():
+    return "Backend is running"
 CORS(app)
 
 # SQLite database file in backend folder
@@ -395,5 +396,6 @@ def get_results(interview_id):
 # -------------------- MAIN -------------------- #
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
+    print(f"Starting app on port {port}")
     app.run(host="0.0.0.0", port=port)
 
