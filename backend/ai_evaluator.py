@@ -1,7 +1,13 @@
 from sentence_transformers import SentenceTransformer, util
 
 # Load model once
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = None
+
+def get_model():
+    global model
+    if model is None:
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+    return model
 
 def keyword_score(answer_text, key_terms):
     if not key_terms:
@@ -37,7 +43,8 @@ def semantic_score(reference_answer, student_answer, key_terms):
     if not reference_answer:
         return 0
 
-    embeddings = model.encode([reference_answer, student_answer])
+    model_instance = get_model()
+    embeddings = model_instance.encode([reference_answer, student_answer])
 
     similarity = util.cos_sim(embeddings[0], embeddings[1]).item()
 
