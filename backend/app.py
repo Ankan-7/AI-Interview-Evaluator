@@ -1,4 +1,3 @@
-print("STARTING FLASK APP...")
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
@@ -8,23 +7,15 @@ from sqlalchemy import create_engine, Column, Integer, String, Text, Float, Fore
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import json
 import re
-import random
 from ai_evaluator import hybrid_evaluate
 import os
 from dotenv import load_dotenv
-import sys
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 load_dotenv()
 
 # -------------------- BASIC APP SETUP -------------------- #
 
 app = Flask(__name__)
-app.config["JSON_SORT_KEYS"] = False
-@app.route("/")
-def home():
-    return "Backend is running"
 CORS(app)
 
 # SQLite database file in backend folder
@@ -205,20 +196,25 @@ def login():
 @app.post("/questions")
 def add_question():
     data = request.json
-    question_text = data.get("question_text")
-    category = data.get("category", "Technical")
-    difficulty = data.get("difficulty", "Easy")
-    key_terms = data.get("key_terms", [])
-    reference_answer = data.get("reference_answer", "")
+    user_id = data.get("user_id")  # IMPORTANT
 
-    if not question_text:
-        return jsonify({"error": "question_text is required"}), 400
-
-    if not isinstance(key_terms, list):
-        return jsonify({"error": "key_terms must be a list"}), 400
-
-    db = SessionLocal()
+    db = get_db()
     try:
+        user = db.query(User).filter_by(id=user_id).first()
+
+        # 🔐 ROLE CHECK
+        if not user or user.role != "admin":
+            return jsonify({"error": "Admin access required"}), 403
+
+        question_text = data.get("question_text")
+        category = data.get("category", "Technical")
+        difficulty = data.get("difficulty", "Easy")
+        key_terms = data.get("key_terms", [])
+        reference_answer = data.get("reference_answer", "")
+
+        if not question_text:
+            return jsonify({"error": "question_text is required"}), 400
+
         q = Question(
             question_text=question_text,
             category=category,
@@ -226,15 +222,18 @@ def add_question():
             key_terms=json.dumps(key_terms),
             reference_answer=reference_answer
         )
+
         db.add(q)
         db.commit()
+
         return jsonify({"message": "Question added", "id": q.id})
+
     finally:
         db.close()
 
 @app.get("/questions")
 def list_questions():
-    db = SessionLocal()
+    db = get_db()
     try:
         questions = db.query(Question).all()
         result = []
@@ -259,7 +258,7 @@ def start_interview():
     category = data.get("category", "Technical")
     num_questions = data.get("num_questions", 5)
 
-    db = SessionLocal()
+    db = get_db()
     try:
         total_q = db.query(Question).filter_by(category=category).count()
         if total_q == 0:
@@ -300,7 +299,7 @@ def submit_interview():
     if not isinstance(answers, list):
         return jsonify({"error": "answers must be a list"}), 400
 
-    db = SessionLocal()
+    db = get_db()
     try:
         interview = db.query(Interview).filter_by(id=interview_id).first()
         if not interview:
@@ -368,7 +367,7 @@ def submit_interview():
 
 @app.get("/results/<int:interview_id>")
 def get_results(interview_id):
-    db = SessionLocal()
+    db = get_db()
     try:
         interview = db.query(Interview).filter_by(id=interview_id).first()
         if not interview:
@@ -395,7 +394,5 @@ def get_results(interview_id):
 
 # -------------------- MAIN -------------------- #
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    print(f"Starting app on port {port}")
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
 

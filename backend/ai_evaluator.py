@@ -48,6 +48,13 @@ def semantic_score(reference_answer, student_answer, key_terms):
 
     similarity = util.cos_sim(embeddings[0], embeddings[1]).item()
 
+    # ---- SEMANTIC THRESHOLD (ADD HERE) ----
+    if similarity < 0.3:
+        return {
+            "score": round(key_score, 1),
+            "feedback": "Answer not relevant to the question."
+        }
+
     score = (similarity + 0.3) * 10
     if score < 0:
         score = 0
@@ -56,6 +63,13 @@ def semantic_score(reference_answer, student_answer, key_terms):
     return score
 
 def hybrid_evaluate(reference_answer, student_answer, key_terms):
+    # ---- BASIC VALIDATION (ADD HERE) ----
+    if len(student_answer.split()) < 5:
+        return {"score": 0, "feedback": "Answer too short or unclear."}
+
+    import re
+    if not re.search(r"[a-zA-Z]{3,}", student_answer):
+        return {"score": 0, "feedback": "Answer appears meaningless."}
 
     sem_score = semantic_score(reference_answer, student_answer, key_terms)
     key_score = keyword_score(student_answer, key_terms)
