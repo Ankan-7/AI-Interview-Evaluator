@@ -185,6 +185,17 @@ The system evaluates responses using a hybrid AI approach and provides scores al
 
 <img src="assets/evaluation.png" width="700"/>
 
+## Deployment Note
+
+This project uses a transformer-based NLP model (SentenceTransformer), 
+which requires significant memory (~400–500MB RAM). 
+
+Due to limitations of free-tier cloud platforms, the backend is currently 
+run locally to ensure stable performance and accurate evaluation.
+
+The system is fully deployable using higher-resource environments or 
+by separating the AI model into a dedicated service.
+
 ## Contributors
 
 * Ankan Kundu
