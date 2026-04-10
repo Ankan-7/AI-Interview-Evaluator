@@ -17,7 +17,7 @@ The system focuses on analyzing textual responses and providing meaningful feedb
 * Hybrid scoring system (semantic + keyword-based)
 * Interview timer with auto-submit
 * Automatic feedback generation
-* SQLite-based data storage
+* PostgreSQL-based data storage
 
 ## Tech Stack
 
